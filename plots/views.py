@@ -5,3 +5,9 @@ from django.http import HttpResponse
 def create_plot(request):
   return HttpResponse("Hello, world. This is the site for plots.")
 
+def bar_plots(request):
+  labels = ['bcn','mad','val','sev']
+  data = [200, 300, 150, 100]
+  
+  return HttpResponse("There should be a bar plot here.")
+
