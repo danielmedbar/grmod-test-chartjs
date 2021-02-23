@@ -8,6 +8,9 @@ def create_plot(request):
 def bar_plots(request):
   labels = ['bcn','mad','val','sev']
   data = [200, 300, 150, 100]
-  
-  return HttpResponse("There should be a bar plot here.")
+
+  return render(request, 'plots.html', {
+    'labels': labels,
+    'data': data,
+  })
 
