@@ -3,13 +3,58 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 </head>
 <body>
-  <h1>Hello world</h1>
+  <h1>Hola Edu !!!</h1>
   <div>
-    <canvas id="bar-plot"></canvas>
+    <canvas id="pie-plot"></canvas>
+  </div>
+  <br>
+  <div>
+    <canvas id="line-plot"></canvas>
   </div>
 
+
   <script>
-    
+    var config_pie = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          label: 'Population',
+          backgroundColor: ['red','blue','green','yellow']
+        }],
+      labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    var config_line = {
+      type: 'line',
+      fill: false,
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+        }],
+      labels: {{ labels|safe }}
+      },
+      options: {
+        legend:{
+          display: false,
+        },
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx_pie = document.getElementById('pie-plot').getContext('2d');
+      window.myPie = new Chart(ctx_pie, config_pie);
+
+      var ctx_line = document.getElementById('line-plot').getContext('2d');
+      window.myLine = new Chart(ctx_line, config_line)
+    };
+
   </script>
 </body>
 </html>
