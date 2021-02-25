@@ -4,8 +4,8 @@
 </head>
 <body>
   <h1>Hola Edu !!!</h1>
-  <div>
-    <canvas id="pie-plot"></canvas>
+  <div contenteditable="True">
+    {{ base_model|safe }}
   </div>
   <br>
   <div>
@@ -14,21 +14,6 @@
 
 
   <script>
-    var config_pie = {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: {{ data|safe }},
-          label: 'Population',
-          backgroundColor: ['red','blue','green','yellow']
-        }],
-      labels: {{ labels|safe }}
-      },
-      options: {
-        responsive: true
-      }
-    };
-
     var config_line = {
       type: 'line',
       fill: false,
@@ -48,9 +33,6 @@
     };
 
     window.onload = function() {
-      var ctx_pie = document.getElementById('pie-plot').getContext('2d');
-      window.myPie = new Chart(ctx_pie, config_pie);
-
       var ctx_line = document.getElementById('line-plot').getContext('2d');
       window.myLine = new Chart(ctx_line, config_line)
     };
