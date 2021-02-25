@@ -6,16 +6,18 @@ import pandas as pd
 
 # Create your models here.
 
-start_date = date(2018,2,1)
-end_date = date(2020,1,1)
+start_date = date(2020,1,1)
+end_date = date(2021,5,1)
 
 cols_date = pd.date_range(start_date, end_date, freq='d', closed=None)
-cols_date = cols_date[cols_date.day==1].strftime('%B %Y')
+cols_date = cols_date[cols_date.day==1].strftime('%B %Y').to_list()
 
-col1 = ['Funnel']
-cols = col1 + cols_date.to_list()
+rows = ['Traffic','Signup','Active','Conversion1','Payment']
 
-df = pd.DataFrame(columns=cols)
-df['Funnel'] = ['Traffic','Signup','Active','Conversion1','Payment']
+import numpy as np
+df = pd.DataFrame(data = np.random.randint(0,1000, size=(len(rows), len(cols_date))), columns = cols_date, index=rows)
+
 
 base_model = df.copy()
+
+initiative_model = df.copy()

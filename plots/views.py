@@ -1,17 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import base_model
+from .models import base_model,cols_date,rows,initiative_model
 
 # Create your views here.
 def bar_plots(request):
-  labels = ['bcn','mad','val','sev']
-  data = [200, 300, 150, 100]
+  labels = cols_date
+  #data = base_model.loc['Traffic'].to_list()
+  #labels = ['a','b']
+  data = base_model.loc[rows[0]].to_list()
 
   base_model_html = base_model.to_html()
+  initiative_model_html = initiative_model.to_html()
 
   return render(request, 'plots.html', {
     'labels': labels,
     'data': data,
     'base_model': base_model_html,
+    'initiative': initiative_model_html,
   })
