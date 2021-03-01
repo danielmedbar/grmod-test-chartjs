@@ -29,14 +29,14 @@
       };
       console.log(tableInitiativeArr);
     };
-
     updateTableInitiativeArr();
+    
     document.querySelectorAll('#initiative_model_data td').forEach(e => e.addEventListener("click", function() {
     // Here, `this` refers to the element the event was hooked on
-    updateTableInitiativeArr();
-    }));
+      updateTableInitiativeArr();
+      })
+      );
     
-
     function addData(chart, newData, datasetIndex) {
       chart.data.datasets[datasetIndex].data = newData;
       chart.update();
