@@ -19,30 +19,32 @@
 
 
   <script>
-    var tableInitiative = document.querySelector('#initiative_model_data').getElementsByTagName('td');
+    
     var tableInitiativeArr = [];
 
     function updateTableInitiativeArr() {
+      var tableInitiative = document.querySelector('#initiative_model_data').getElementsByTagName('td');
       for (var i = 0; i < tableInitiative.length; i++){
         tableInitiativeArr.push(tableInitiative[i].innerHTML)
       };
+      console.log(tableInitiativeArr);
     };
 
-    for (var i = 0; i < tableInitiative.length; i++){
-      tableInitiativeArr.push(tableInitiative[i].innerHTML)
-    };
+    updateTableInitiativeArr();
+    document.querySelectorAll('#initiative_model_data td').forEach(e => e.addEventListener("click", function() {
+    // Here, `this` refers to the element the event was hooked on
+    updateTableInitiativeArr();
+    }));
     
-    console.log(tableInitiative);
-    console.log(tableInitiativeArr);
 
-    function addData(chart, data, datasetIndex) {
-      chart.data.datasets[datasetIndex].data = data;
+    function addData(chart, newData, datasetIndex) {
+      chart.data.datasets[datasetIndex].data = newData;
       chart.update();
     };
 
 
 
-    var config_line = {
+    var configLinePlot = {
       type: 'line',
       fill: false,
       data: {
@@ -66,16 +68,11 @@
       }
     };
 
-    window.onload = function() {
-      var ctx_line = document.getElementById('line-plot').getContext('2d');
-      window.myLine = new Chart(ctx_line, config_line);
-    };
+    let contextLinePlot = document.getElementById('line-plot').getContext('2d');
 
-    document.querySelector('#initiative_model_data').onchange = function(){
-      updateTableInitiativeArr();
-      addData(chart=window.myLine, data=[0], datasetIndex=0);
-    };
-    console.log(window.myLine.data);
+    var linePlot = new Chart(contextLinePlot, configLinePlot);
+
+    
     
   </script>
 </body>
