@@ -17,7 +17,7 @@ rows = ['Traffic','Signup','Active','Conversion1','Payment']
 import numpy as np
 df = pd.DataFrame(data = np.random.randint(0,1000, size=(len(rows), len(cols_date))), columns = cols_date, index=rows)
 
+row_i = 'Traffic'
 
-base_model = df.copy()
-
-initiative_model = df.copy()
+base_model = df.copy().loc[[row_i]]
+initiative_model = df.copy().loc[[row_i]]
