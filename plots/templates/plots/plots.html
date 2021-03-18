@@ -1,0 +1,101 @@
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+</head>
+<body>
+  <h1>Hola Edu !!!</h1>
+  <h2>Base model data</h2>
+  <div contenteditable="True">
+    {{ base_model|safe }}
+  </div>
+  <h2>Initiative model data</h2>
+  <div contenteditable="True">
+    {{ initiative_model|safe }}
+  </div>
+  <h2>Initiative model data with form</h2>
+  <div>
+    <table border = "1" id="initiative_model_data">
+      <thead>
+        <tr>
+          <th></th>
+          {% for l in labels %}
+          <th>{{ l }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ row_name }}</td>
+          {% for im in initiative_model_values %}
+          <td><input type="text" id="hello" value="{{ im }}"></td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <div>
+    <canvas id="line-plot" width="1000" height="500"></canvas>
+  </div>
+
+
+
+  <script>
+    
+    var tableInitiativeArr = [];
+
+    function updateTableInitiativeArr() {
+      var tableInitiative = document.querySelectorAll('input#hello');
+      for (var i = 0; i < tableInitiative.length; i++){
+        tableInitiativeArr.push(tableInitiative[i].value)
+      };
+      console.log(tableInitiativeArr);
+    };
+    updateTableInitiativeArr();
+
+    function addData(chart, newData, datasetIndex) {
+      chart.data.datasets[datasetIndex].data = newData;
+      chart.update();
+    };
+    
+    document.querySelectorAll('input#hello').forEach(e => e.addEventListener("change", function() {
+    // Here, `this` refers to the element the event was hooked on
+      tableInitiativeArr.length = 0
+      updateTableInitiativeArr();
+      addData(chart=linePlot, newData=tableInitiativeArr, datasetIndex=1);
+      }
+      )
+      );
+
+    var configLinePlot = {
+      type: 'line',
+      fill: false,
+      data: {
+        datasets: [{
+          data: {{ base_model_values|safe }},
+          backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+          label: 'Base model',
+          },{
+          data: tableInitiativeArr,
+          backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+          label: 'Initiative model'
+          }
+        ],
+      labels: {{ labels|safe }}
+      },
+      options: {
+        legend:{
+          display: true,
+        },
+        responsive: false
+      }
+    };
+
+    let contextLinePlot = document.getElementById('line-plot').getContext('2d');
+    var linePlot = new Chart(contextLinePlot, configLinePlot);
+
+    
+    
+  </script>
+</body>
+</html>
